@@ -1,158 +1,262 @@
-import type { ReactNode } from 'react';
-import bottle from '@/assets/newBottle.png';
-import { GoldButton } from '@/components/ui';
-import { cx } from '@/utils/cx';
+import type { ReactNode } from "react";
+import bottle from "@/assets/newBottle.png";
+import { GoldButton } from "@/components/ui";
+import { cx } from "@/utils/cx";
+import { QrCode } from "./QrCode";
+import instagramPost from "../../assets/post.jpeg";
+import couponReveal from "../../assets/coupon.png";
+import adminAnalytics from "../../assets/admin.png";
+import otpVerification from "../../assets/otp.png";
 
 export interface PhoneScreen {
   title: string;
-  render: () => ReactNode;
+  image?: string;
+  render?: () => ReactNode;
 }
 
 const QR_CORNERS = [
-  'top-0 left-0 border-t-4 border-l-4',
-  'top-0 right-0 border-t-4 border-r-4',
-  'bottom-0 left-0 border-b-4 border-l-4',
-  'bottom-0 right-0 border-b-4 border-r-4',
+  "top-0 left-0 border-t-4 border-l-4",
+  "top-0 right-0 border-t-4 border-r-4",
+  "bottom-0 left-0 border-b-4 border-l-4",
+  "bottom-0 right-0 border-b-4 border-r-4",
 ];
 
-const OTP_DIGITS = 6;
-const OTP_FILLED = 3;
+/** Logo, trophy/shield icons, score and jump menu. Used by the game screens. */
+function AppTopBar() {
+  return (
+    <div className="relative flex items-center gap-1.5 px-3 pt-9">
+      <div className="mr-auto font-serif text-amber-200 leading-none">
+        <div className="text-sm tracking-wider">THE INDIAN</div>
+        <div className="text-[7px] tracking-[.3em] text-amber-300/70 text-center">
+          EDIT
+        </div>
+      </div>
+      {["🏆", "🛡️"].map((icon) => (
+        <span
+          key={icon}
+          className="w-6 h-6 rounded-full border border-amber-500/50 bg-black/50 text-[10px] flex items-center justify-center"
+        >
+          {icon}
+        </span>
+      ))}
+      <div className="rounded-md border border-amber-500/40 bg-black/50 px-2 py-1 text-[8px] text-amber-100">
+        SCORE <b className="ml-1 text-amber-300">0</b>
+      </div>
+    </div>
+  );
+}
+
+const LEVEL_CARD = "rounded-2xl border border-amber-500/40 bg-black/55 p-3";
+const LEVEL_PILL =
+  "inline-block rounded-full border border-amber-500/50 bg-black/60 px-2 py-0.5 text-[7px] tracking-[.2em] text-amber-200";
 
 export const PHONE_SCREENS: PhoneScreen[] = [
   {
-    title: 'QR scanning',
+    title: "QR scanning",
     render: () => (
-      <div className="h-full bg-stone-900 flex flex-col items-center justify-center gap-4">
-        <div className="w-36 h-36 relative">
+      <div className="h-full relative overflow-hidden bg-black flex flex-col items-center justify-center gap-7">
+        <div className="absolute w-64 h-64 rounded-full bg-amber-500/25 blur-3xl" />
+
+        {/* QR with gold corner brackets */}
+        <div className="relative w-40 h-40">
           {QR_CORNERS.map((corner) => (
-            <span key={corner} className={cx('absolute w-7 h-7 border-amber-400', corner)} />
+            <span
+              key={corner}
+              className={cx("absolute w-8 h-8 border-amber-400", corner)}
+            />
           ))}
-          <div className="absolute inset-6 pat" />
+          <div className="absolute inset-5 drop-shadow-[0_0_14px_rgba(251,191,36,0.6)]">
+            <QrCode className="w-full h-full" />
+          </div>
         </div>
-        <div className="text-amber-100 text-center">
-          Scan to enter
-          <br />
-          <b className="font-serif text-lg">The Indian Edit</b>
+
+        <div className="relative text-center">
+          <div className="text-amber-50 tracking-wide">Scan to enter</div>
+          <div className="flex items-center justify-center gap-2 mt-1">
+            <span className="h-px w-5 bg-amber-300/60" />
+            <b className="font-serif text-xl text-amber-200">The Indian Edit</b>
+            <span className="h-px w-5 bg-amber-300/60" />
+          </div>
         </div>
       </div>
     ),
   },
   {
-    title: 'OTP verification',
+    title: "OTP verification",
     render: () => (
-      <div className="p-5 pt-10 space-y-4">
-        <div className="font-serif text-xl text-amber-100">Verify your number</div>
-        <div className="text-stone-400">Enter the 6-digit code sent to your mobile.</div>
-        <div className="flex gap-1">
-          {Array.from({ length: OTP_DIGITS }, (_, i) => (
-            <div
-              key={i}
-              className="flex-1 h-9 rounded border border-amber-500/50 text-center leading-9 text-amber-200"
-            >
-              {i < OTP_FILLED ? '•' : ''}
+      <div className="h-full bg-black pt-4">
+        <img
+          src={otpVerification}
+          alt="Two-factor authentication: enter verification code"
+          className="h-full w-full object-cover object-top"
+        />
+      </div>
+    ),
+  },
+  {
+    title: "Welcome / onboarding",
+    render: () => (
+      <div className="h-full relative overflow-hidden bg-black flex flex-col">
+        {/* Bottle backdrop, darkened so the text stays readable */}
+        <img
+          src={bottle}
+          className="absolute -right-8 top-10 h-72 opacity-40"
+          alt=""
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black" />
+
+        {/* Top bar: logo, icons, score, jump */}
+        <div className="relative flex items-center gap-1.5 px-3 pt-9">
+          <div className="mr-auto font-serif text-amber-200 leading-none">
+            <div className="text-sm tracking-wider">THE INDIAN</div>
+            <div className="text-[7px] tracking-[.3em] text-amber-300/70 text-center">
+              EDIT
             </div>
+          </div>
+          {["🏆", "🛡️"].map((icon) => (
+            <span
+              key={icon}
+              className="w-6 h-6 rounded-full border border-amber-500/50 bg-black/50 text-[10px] flex items-center justify-center"
+            >
+              {icon}
+            </span>
           ))}
-        </div>
-        <GoldButton>Verify &amp; Continue</GoldButton>
-        <div className="text-center text-stone-500">Resend code</div>
-      </div>
-    ),
-  },
-  {
-    title: 'Welcome / onboarding',
-    render: () => (
-      <div className="h-full flex flex-col items-center justify-end pb-6 bg-gradient-to-b from-red-950 to-black">
-        <img src={bottle} className="h-56 mb-3" alt="" />
-        <div className="font-serif text-xl text-amber-100">Welcome to the Edit</div>
-        <div className="text-stone-400 text-center px-6 mb-3">Discover, play and unlock what’s next.</div>
-        <GoldButton className="w-40">Begin</GoldButton>
-      </div>
-    ),
-  },
-  {
-    title: 'Home',
-    render: () => (
-      <div className="p-4 pt-9 space-y-3">
-        <div className="text-stone-400">Welcome back</div>
-        <div className="font-serif text-xl text-amber-100">Your Edit</div>
-        {['🎮 Today’s activity', '🎁 My coupon', '📍 Outlet details'].map((item) => (
-          <div key={item} className="rounded-lg border border-amber-500/30 bg-white/5 p-3 text-amber-100">
-            {item}
-          </div>
-        ))}
-      </div>
-    ),
-  },
-  {
-    title: 'Engagement activity',
-    render: () => (
-      <div className="p-4 pt-9 space-y-3">
-        <div className="flex justify-between text-stone-400">
-          <span>Question 2 of 5</span>
-          <span>40%</span>
-        </div>
-        <div className="h-1.5 rounded bg-white/10">
-          <div className="h-full w-2/5 bg-amber-500 rounded" />
-        </div>
-        <div className="rounded-lg bg-white/5 p-3 text-amber-50">Sample activity prompt appears here</div>
-        {['Option A', 'Option B', 'Option C'].map((option, i) => (
-          <div
-            key={option}
-            className={cx(
-              'rounded-lg border p-2.5',
-              i === 1 ? 'border-amber-400 bg-amber-500/20 text-amber-100' : 'border-white/10 text-stone-300',
-            )}
-          >
-            {option}
-          </div>
-        ))}
-      </div>
-    ),
-  },
-  {
-    title: 'Completion',
-    render: () => (
-      <div className="h-full flex flex-col items-center justify-center gap-3 text-center px-5">
-        <div className="w-16 h-16 rounded-full bg-amber-500 text-black text-3xl flex items-center justify-center">✓</div>
-        <div className="font-serif text-xl text-amber-100">Activity complete</div>
-        <div className="text-stone-400">Your result is confirmed.</div>
-        <GoldButton className="w-full">View my reward</GoldButton>
-      </div>
-    ),
-  },
-  {
-    title: 'Coupon redeem',
-    render: () => (
-      <div className="p-4 pt-9 space-y-3">
-        <div className="font-serif text-xl text-amber-100">Your coupon</div>
-        <div className="rounded-xl border-2 border-dashed border-amber-500 p-4 text-center bg-amber-500/10">
-          <div className="text-stone-400">Eligible benefit</div>
-          <div className="text-amber-300 text-lg font-serif my-1">Benefit details</div>
-          <div className="tracking-widest text-amber-100">CODE-XXXX</div>
-        </div>
-        <div className="text-stone-400 text-center">Show this screen to outlet staff</div>
-        <GoldButton>Redeem</GoldButton>
-      </div>
-    ),
-  },
-  {
-    title: 'Profile & history (Admin)',
-    render: () => (
-      <div className="p-4 pt-9 space-y-2">
-        <div className="flex items-center gap-2">
-          <div className="w-10 h-10 rounded-full bg-amber-500/30" />
-          <div>
-            <div className="text-amber-100">Participant</div>
-            <div className="text-stone-500">Registered mobile</div>
+          <div className="rounded-md border border-amber-500/40 bg-black/50 px-2 py-1 text-[8px] text-amber-100">
+            SCORE <b className="ml-1 text-amber-300">0</b>
           </div>
         </div>
-        <div className="text-amber-400 mt-2">Activity history</div>
-        {['Activity completed', 'Coupon issued', 'Coupon redeemed'].map((event) => (
-          <div key={event} className="flex justify-between border-b border-white/10 py-1.5 text-stone-300">
-            <span>{event}</span>
-            <span className="text-stone-500">Date</span>
+
+        {/* Main content */}
+        <div className="relative flex-1 flex flex-col items-center justify-center text-center px-5 gap-5">
+          <div className="rounded-full border border-amber-500/50 bg-black/60 px-3 py-1.5 text-[9px] tracking-[.18em] text-amber-200 uppercase">
+            ◎ Welcome to the experience
           </div>
-        ))}
+
+          <h3 className="font-serif text-2xl tracking-wide leading-tight text-amber-50">
+            INDIA’S RICH
+            <br />
+            HERITAGE
+            <span className="block text-amber-400">A PREMIUM BLEND</span>
+          </h3>
+
+          <div className="flex items-center gap-3 text-left">
+            <span className="w-10 h-10 shrink-0 rounded-full bg-gradient-to-br from-amber-200 to-amber-500 flex items-center justify-center text-lg">
+              🎁
+            </span>
+            <div>
+              <div className="font-serif text-sm text-amber-50 leading-tight">
+                Grand Finale Privilege Reward
+              </div>
+              <div className="text-[9px] text-stone-300 leading-snug mt-0.5">
+                Custom 1080p Instagram post + Gold Foil Scratch Card
+              </div>
+            </div>
+          </div>
+
+          <GoldButton className="w-40">Begin Edit Tour</GoldButton>
+        </div>
+      </div>
+    ),
+  },
+
+  {
+    title: "Engagement activity",
+    render: () => (
+      <div className="h-full relative overflow-hidden bg-black">
+        <img
+          src={bottle}
+          className="absolute -right-10 top-16 h-80 opacity-30"
+          alt=""
+        />
+        <div className="relative h-full overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <AppTopBar />
+
+          <div className="relative px-3 pb-6 mt-3 space-y-3">
+            {/* Level 01 */}
+            <section className={LEVEL_CARD}>
+              <span className={LEVEL_PILL}>LEVEL 01</span>
+              <h3 className="font-serif text-lg leading-tight text-amber-300 mt-1.5">
+                DECODE
+                <br />
+                THE BOTTLE
+              </h3>
+              <div className="mt-2.5 flex justify-center">
+                <span className="rounded-full bg-gradient-to-r from-amber-300 to-amber-500 text-black text-[9px] font-medium px-4 py-1.5">
+                  Start The Edit →
+                </span>
+              </div>
+            </section>
+
+            {/* Level 02 */}
+            <section className={LEVEL_CARD}>
+              <span className={LEVEL_PILL}>LEVEL 02</span>
+              <h3 className="font-serif text-lg leading-tight text-amber-300 mt-1.5">
+                BLEND
+                <br />
+                THE EDIT
+              </h3>
+
+              <div className="mt-2.5 flex justify-center">
+                <span className="rounded-full bg-gradient-to-r from-amber-300 to-amber-500 text-black text-[9px] font-medium px-4 py-1.5">
+                  Start The Edit →
+                </span>
+              </div>
+            </section>
+
+            {/* Level 03 */}
+            <section className={LEVEL_CARD}>
+              <span className={LEVEL_PILL}>LEVEL 03</span>
+              <h3 className="font-serif text-lg leading-tight text-amber-300 mt-1.5">
+                HUNT
+                <br />
+                THE EDIT
+              </h3>
+              <p className="font-serif italic text-[9px] text-amber-100 mt-1">
+                “Can you find all 5 The Indian Edit Bottle?”
+              </p>
+              <div className="mt-2.5 flex justify-center">
+                <span className="rounded-full bg-gradient-to-r from-amber-300 to-amber-500 text-black text-[9px] font-medium px-4 py-1.5">
+                  Start The Edit →
+                </span>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    title: "Instagram Post",
+    render: () => (
+      <img
+        src={instagramPost}
+        alt="Instagram post card: Unlock your Edit"
+        className="h-full w-full object-cover object-top"
+      />
+    ),
+  },
+  {
+    title: "Coupon redeem",
+    render: () => (
+      <div className="h-full bg-black pt-4">
+        <img
+          src={couponReveal}
+          alt="Scratch and reveal: free 20 ml coupon"
+          className="h-full w-full object-cover object-top"
+        />
+      </div>
+    ),
+  },
+
+  {
+    title: "Admin dashboard",
+    render: () => (
+      <div className="h-full bg-black pt-4">
+        <img
+          src={adminAnalytics}
+          alt="Admin dashboard: campaign analytics"
+          className="h-full w-full object-cover object-top"
+        />
       </div>
     ),
   },

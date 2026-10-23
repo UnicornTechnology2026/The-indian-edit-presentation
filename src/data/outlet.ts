@@ -17,7 +17,7 @@ export const OUTLET_OWNERS: Record<
     className: "border-rose-400/60 text-rose-200 bg-rose-500/10",
   },
   staff: {
-    label: "Outlet staff",
+    label: "Promoter",
     className: "border-amber-400/60 text-amber-200 bg-amber-500/10",
   },
 };
@@ -26,7 +26,7 @@ export const OUTLET_STEPS: OutletStep[] = [
   {
     icon: "📋",
     title: "Brief",
-    text: "We brief your team.",
+    text: "Brief your promoter.",
     owner: "brand",
     details: [
       "Share the approved campaign and SOP",

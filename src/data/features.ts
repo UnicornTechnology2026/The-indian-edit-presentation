@@ -15,49 +15,71 @@ const optional = (label: string): FeatureItem => ({ label, optional: true });
 
 export const FEATURE_AREAS: FeatureArea[] = [
   {
-    icon: '📷',
-    title: 'QR Scanning',
-    items: [core('QR scanning and campaign entry'), core('Approved entry points'), optional('Outlet-specific QR codes')],
-  },
-  {
-    icon: '🔐',
-    title: 'User Access',
-    items: [core('Registration'), core('OTP verification'), core('Edit experience entry'), optional('Profile update')],
-  },
-  {
-    icon: '🎮',
-    title: 'Consumer Experience',
-    items: [core('Brand content'), core('Activity discovery'), core('Interactive engagement'), optional('Progress tracking')],
-  },
-  {
-    icon: '✅',
-    title: 'Eligibility & Validation',
-    items: [core('Campaign rules'), core('Participation limits'), core('Verification'), core('Duplicate prevention')],
-  },
-  {
-    icon: '🎁',
-    title: 'Rewards & Confirmation',
+    icon: "📷",
+    title: "QR Scanning",
     items: [
-      core('Activity status'),
-      core('Eligible benefit details'),
-      core('Redemption instructions'),
-      optional('Confirmation, if applicable'),
+      core("QR scanning and campaign entry"),
+      core("Approved entry points"),
     ],
   },
   {
-    icon: '🛠️',
-    title: 'Admin: Analytics & Administration',
-    items: [core('Campaign configuration'), core('Outlet management'), core('Engagement metrics'), optional('Operational reporting')],
+    icon: "🔐",
+    title: "User Access",
+    items: [
+      core("Registration"),
+      core("OTP verification"),
+      core("Edit experience entry"),
+    ],
+  },
+  {
+    icon: "🎮",
+    title: "Consumer Experience",
+    items: [
+      core("Brand content"),
+      core("Activity discovery"),
+      core("Interactive engagement"),
+      optional("Progress tracking"),
+    ],
+  },
+  {
+    icon: "✅",
+    title: "Eligibility & Validation",
+    items: [
+      core("Campaign rules"),
+      core("Verification"),
+      core("Duplicate prevention"),
+    ],
+  },
+  {
+    icon: "🎁",
+    title: "Rewards & Confirmation",
+    items: [
+      core("Activity status"),
+      core("Eligible benefit details"),
+      core("Redemption instructions"),
+    ],
+  },
+  {
+    icon: "🛠️",
+    title: "Admin: Analytics & Administration",
+    items: [
+      core("Campaign configuration"),
+      core("Engagement metrics"),
+      optional("Operational reporting"),
+    ],
   },
 ];
 
-export type FeatureFilter = 'all' | 'core' | 'optional';
+export type FeatureFilter = "all" | "core" | "optional";
 
 export const FEATURE_FILTERS: { value: FeatureFilter; label: string }[] = [
-  { value: 'all', label: 'All' },
-  { value: 'core', label: 'Core only' },
-  { value: 'optional', label: 'Optional only' },
+  { value: "all", label: "All" },
+  { value: "core", label: "Core only" },
+  { value: "optional", label: "Optional only" },
 ];
 
-export const matchesFilter = (item: FeatureItem, filter: FeatureFilter): boolean =>
-  filter === 'all' || (filter === 'core' ? !item.optional : item.optional);
+export const matchesFilter = (
+  item: FeatureItem,
+  filter: FeatureFilter,
+): boolean =>
+  filter === "all" || (filter === "core" ? !item.optional : item.optional);

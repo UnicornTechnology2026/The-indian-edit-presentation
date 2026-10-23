@@ -3,11 +3,6 @@ import { SlideHeading } from "@/components/ui";
 import { FEATURE_AREAS, type FeatureArea } from "@/data/features";
 import { cx } from "@/utils/cx";
 
-const TOTAL_CAPABILITIES = FEATURE_AREAS.reduce(
-  (sum, area) => sum + area.items.length,
-  0,
-);
-
 /* ------------------------------------------------------------------ */
 /* Left list: one button per capability area                           */
 /* ------------------------------------------------------------------ */
@@ -124,13 +119,10 @@ export function FeaturesSlide() {
     <div className="p-6 md:p-10">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <SlideHeading
-          kicker="04 · Key App Functionalities"
+          kicker=" Key App Functionalities"
           title="Six capability areas"
           subtitle="Pick an area to see what the app does there."
         />
-        <span className="mb-5 text-xs text-stone-500">
-          {TOTAL_CAPABILITIES} capabilities across all areas
-        </span>
       </div>
 
       <div className="grid lg:grid-cols-5 gap-5">

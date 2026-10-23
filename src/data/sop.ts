@@ -1,9 +1,5 @@
 /** Swimlanes, top to bottom. A step's `lane` is an index into this list. */
-export const SOP_LANES = [
-  "Consumer",
-  "Outlet Staff",
-  "App & Back-office",
-] as const;
+export const SOP_LANES = ["Consumer", "Promoter", "App & Back-office"] as const;
 
 /** Colours per lane, same order as SOP_LANES. */
 export const SOP_LANE_STYLES = [

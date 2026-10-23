@@ -1,11 +1,12 @@
-import { useState } from 'react';
-import { PhoneFrame } from '@/components/phone/PhoneFrame';
-import { SlideHeading } from '@/components/ui';
-import { cx } from '@/utils/cx';
-import { PHONE_SCREENS } from './phoneScreens';
+import { useState } from "react";
+import { PhoneFrame } from "@/components/phone/PhoneFrame";
+import { SlideHeading } from "@/components/ui";
+import { cx } from "@/utils/cx";
+import { PHONE_SCREENS } from "./phoneScreens";
 
 export function ScreensSlide() {
   const [selected, setSelected] = useState(0);
+  const screen = PHONE_SCREENS[selected];
 
   return (
     <div className="p-6 md:p-10">
@@ -14,30 +15,51 @@ export function ScreensSlide() {
         title="Proposed UI concepts"
         subtitle="Concept layouts only — not screenshots of an existing product."
       />
-      <div className="flex flex-col md:flex-row gap-8 items-center">
-        <PhoneFrame>
-          <div key={selected} className="h-full fade">
-            {PHONE_SCREENS[selected].render()}
-          </div>
-        </PhoneFrame>
 
-        <div className="grid grid-cols-2 gap-2 flex-1 w-full">
-          {PHONE_SCREENS.map((screen, i) => (
+      {/* Desktop: buttons on the left, phone in the middle, empty right column
+          keeps the phone truly centred. Mobile: phone first, buttons below. */}
+      <div className="grid gap-8 items-center lg:grid-cols-[1fr_auto_1fr]">
+        {/* Phone / image (middle) */}
+        <div className="order-1 lg:order-2 flex justify-center">
+          {screen.image ? (
+            <img
+              key={selected}
+              src={screen.image}
+              alt={screen.title}
+              className="fade w-full max-w-sm max-h-[70vh] object-contain rounded-xl"
+            />
+          ) : (
+            screen.render && (
+              <PhoneFrame>
+                <div key={selected} className="h-full fade">
+                  {screen.render()}
+                </div>
+              </PhoneFrame>
+            )
+          )}
+        </div>
+
+        {/* Buttons (left) */}
+        <div className="order-2 lg:order-1 grid grid-cols-2 lg:grid-cols-1 gap-2 w-full max-w-md lg:max-w-xs lg:justify-self-start">
+          {PHONE_SCREENS.map((s, i) => (
             <button
-              key={screen.title}
+              key={s.title}
               onClick={() => setSelected(i)}
               className={cx(
-                'text-left rounded-lg p-3 border text-sm',
+                "text-left rounded-lg p-3 border text-sm",
                 selected === i
-                  ? 'bg-amber-500 text-black border-amber-400'
-                  : 'border-amber-500/20 bg-white/[0.04] text-stone-200 hover:border-amber-500/60',
+                  ? "bg-amber-500 text-black border-amber-400"
+                  : "border-amber-500/20 bg-white/[0.04] text-stone-200 hover:border-amber-500/60",
               )}
             >
               <span className="opacity-60 mr-2">{i + 1}</span>
-              {screen.title}
+              {s.title}
             </button>
           ))}
         </div>
+
+        {/* Right spacer (desktop only) */}
+        <div className="order-3 hidden lg:block" />
       </div>
     </div>
   );

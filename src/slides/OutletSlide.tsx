@@ -13,8 +13,8 @@ export function OutletSlide() {
         </h2>
         <p className="text-stone-400 mt-2 text-base max-w-2xl">
           The same routine at every outlet, so every guest gets the same
-          experience. The brand team sets it up and reviews it. Outlet staff run
-          it on the day.
+          experience. The brand team sets it up and reviews it. Promoter run it
+          on the day.
         </p>
       </div>
 
