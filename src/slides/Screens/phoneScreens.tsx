@@ -7,6 +7,7 @@ import instagramPost from "../../assets/post.jpeg";
 import couponReveal from "../../assets/coupon.png";
 import adminAnalytics from "../../assets/admin.png";
 import otpVerification from "../../assets/otp.png";
+import loginScreen from "../../assets/login.png";
 
 export interface PhoneScreen {
   title: string;
@@ -82,6 +83,18 @@ export const PHONE_SCREENS: PhoneScreen[] = [
     ),
   },
   {
+    title: "Registration",
+    render: () => (
+      <div className="h-full bg-black pt-4">
+        <img
+          src={loginScreen}
+          alt="Login: enter name, city and mobile number to unlock the edit"
+          className="h-full w-full object-contain object-top"
+        />
+      </div>
+    ),
+  },
+  {
     title: "OTP verification",
     render: () => (
       <div className="h-full bg-black pt-4">
@@ -93,6 +106,7 @@ export const PHONE_SCREENS: PhoneScreen[] = [
       </div>
     ),
   },
+
   {
     title: "Welcome / onboarding",
     render: () => (
