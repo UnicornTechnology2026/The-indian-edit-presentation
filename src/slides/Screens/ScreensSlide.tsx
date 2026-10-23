@@ -3,6 +3,7 @@ import { PhoneFrame } from "@/components/phone/PhoneFrame";
 import { SlideHeading } from "@/components/ui";
 import { cx } from "@/utils/cx";
 import { PHONE_SCREENS } from "./phoneScreens";
+import { Callouts } from "./Callouts";
 
 export function ScreensSlide() {
   const [selected, setSelected] = useState(0);
@@ -58,8 +59,12 @@ export function ScreensSlide() {
           ))}
         </div>
 
-        {/* Right spacer (desktop only) */}
-        <div className="order-3 hidden lg:block" />
+        <div
+          key={selected}
+          className="order-2 lg:order-3 flex justify-center lg:justify-start"
+        >
+          <Callouts items={screen.callouts ?? []} />
+        </div>
       </div>
     </div>
   );

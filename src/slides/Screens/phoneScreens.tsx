@@ -9,8 +9,15 @@ import adminAnalytics from "../../assets/admin.png";
 import otpVerification from "../../assets/otp.png";
 import loginScreen from "../../assets/login.png";
 
+/** A label beside the phone. `y` = px from the top of the phone frame (470px tall). */
+export interface Callout {
+  title: string;
+  text: string;
+  y: number;
+}
 export interface PhoneScreen {
   title: string;
+  callouts?: Callout[];
   image?: string;
   render?: () => ReactNode;
 }
@@ -54,6 +61,18 @@ const LEVEL_PILL =
 export const PHONE_SCREENS: PhoneScreen[] = [
   {
     title: "QR scanning",
+    callouts: [
+      {
+        title: "Outlet QR code",
+        text: "Scanned from outlet materials",
+        y: 195,
+      },
+      {
+        title: "Approved entry points",
+        text: "QR or other approved channels",
+        y: 325,
+      },
+    ],
     render: () => (
       <div className="h-full relative overflow-hidden bg-black flex flex-col items-center justify-center gap-7">
         <div className="absolute w-64 h-64 rounded-full bg-amber-500/25 blur-3xl" />
@@ -84,6 +103,11 @@ export const PHONE_SCREENS: PhoneScreen[] = [
   },
   {
     title: "Registration",
+    callouts: [
+      { title: "Name and city", text: "Feed outlet-level insights", y: 218 },
+      { title: "Mobile number", text: "Receives the OTP next", y: 297 },
+      { title: "Privacy consent", text: "Required to unlock the edit", y: 360 },
+    ],
     render: () => (
       <div className="h-full bg-black pt-4">
         <img
@@ -96,6 +120,19 @@ export const PHONE_SCREENS: PhoneScreen[] = [
   },
   {
     title: "OTP verification",
+    callouts: [
+      {
+        title: "Code sent to mobile",
+        text: "Verifies the registered number",
+        y: 225,
+      },
+      { title: "Six-digit code", text: "Confirm to enter the edit", y: 295 },
+      {
+        title: "Resend timer",
+        text: "Retry OTP or ask staff for help",
+        y: 365,
+      },
+    ],
     render: () => (
       <div className="h-full bg-black pt-4">
         <img
@@ -109,6 +146,19 @@ export const PHONE_SCREENS: PhoneScreen[] = [
 
   {
     title: "Welcome / onboarding",
+    callouts: [
+      { title: "Brand message", text: "Sets the tone for the edit", y: 225 },
+      {
+        title: "Grand Finale reward",
+        text: "Shown upfront to motivate play",
+        y: 345,
+      },
+      {
+        title: "Begin Edit Tour",
+        text: "Starts the engagement activity",
+        y: 416,
+      },
+    ],
     render: () => (
       <div className="h-full relative overflow-hidden bg-black flex flex-col">
         {/* Bottle backdrop, darkened so the text stays readable */}
@@ -175,6 +225,12 @@ export const PHONE_SCREENS: PhoneScreen[] = [
 
   {
     title: "Engagement activity",
+    callouts: [
+      { title: "Score and progress", text: "Tracked across the levels", y: 50 },
+      { title: "Level 01", text: "Decode the bottle", y: 165 },
+      { title: "Level 02", text: "Blend the edit", y: 307 },
+      { title: "Level 03", text: "Hunt the edit", y: 425 },
+    ],
     render: () => (
       <div className="h-full relative overflow-hidden bg-black">
         <img
@@ -241,6 +297,11 @@ export const PHONE_SCREENS: PhoneScreen[] = [
   },
   {
     title: "Instagram Post",
+    callouts: [
+      { title: "Unlock your edit", text: "Shareable Instagram card", y: 233 },
+      { title: "Progress score", text: "Points toward the finale", y: 312 },
+      { title: "Download card", text: "Saved as a PNG to share", y: 437 },
+    ],
     render: () => (
       <img
         src={instagramPost}
@@ -251,6 +312,19 @@ export const PHONE_SCREENS: PhoneScreen[] = [
   },
   {
     title: "Coupon redeem",
+    callouts: [
+      {
+        title: "Outlet privilege",
+        text: "Tied to the participating outlet",
+        y: 100,
+      },
+      {
+        title: "Scratch and reveal",
+        text: "Reveals the eligible benefit",
+        y: 265,
+      },
+      { title: "Free 20 ml coupon", text: "Redeemed at the outlet", y: 400 },
+    ],
     render: () => (
       <div className="h-full bg-black pt-4">
         <img
@@ -264,6 +338,19 @@ export const PHONE_SCREENS: PhoneScreen[] = [
 
   {
     title: "Admin dashboard",
+    callouts: [
+      { title: "Dashboard tabs", text: "Overview, players and scores", y: 100 },
+      {
+        title: "Trend chart",
+        text: "Registrations and completed runs",
+        y: 235,
+      },
+      {
+        title: "Key metrics",
+        text: "Registered, completed, score, play time",
+        y: 385,
+      },
+    ],
     render: () => (
       <div className="h-full bg-black pt-4">
         <img
