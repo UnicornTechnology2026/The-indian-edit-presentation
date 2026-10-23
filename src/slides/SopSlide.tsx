@@ -6,6 +6,7 @@ import {
   type SopStep,
 } from "@/data/sop";
 import { cx } from "@/utils/cx";
+import { delay } from "@/utils/anim";
 
 interface StepCardProps {
   index: number;
@@ -21,8 +22,9 @@ function StepCard({ index, step, done, onToggle }: StepCardProps) {
   return (
     <button
       onClick={() => onToggle(index)}
+      style={delay(350 + index * 130)}
       className={cx(
-        "w-full text-left rounded-xl border p-3 transition",
+        "rise lift w-full text-left rounded-xl border p-3 transition",
         done ? "bg-white/[0.09]" : "bg-white/[0.04]",
         style.card,
       )}
@@ -32,6 +34,7 @@ function StepCard({ index, step, done, onToggle }: StepCardProps) {
           className={cx(
             "w-7 h-7 shrink-0 rounded-full border flex items-center justify-center text-xs font-semibold",
             done ? style.done : style.dot,
+            done && "pop",
           )}
         >
           {done ? "✓" : index + 1}
@@ -67,13 +70,19 @@ export function SopSlide() {
     <div className="p-5 md:p-10 max-w-6xl mx-auto">
       <div className="mb-6">
         <div className="flex items-center gap-3 text-[11px] tracking-[.35em] text-amber-500 uppercase">
-          <span className="w-10 h-px bg-amber-500" />
+          <span className="draw-x w-10 h-px bg-amber-500" />
           Outlet SOP · Standard Operating Procedure
         </div>
-        <h2 className="font-serif text-3xl md:text-5xl text-amber-50 mt-1">
+        <h2
+          style={delay(100)}
+          className="rise font-serif text-3xl md:text-5xl text-amber-50 mt-1"
+        >
           Who does what, step by step.
         </h2>
-        <p className="text-stone-400 mt-2 text-base max-w-2xl">
+        <p
+          style={delay(220)}
+          className="rise text-stone-400 mt-2 text-base max-w-2xl"
+        >
           Follow the six steps in order. Tap a step to tick it off.
         </p>
       </div>
@@ -83,8 +92,9 @@ export function SopSlide() {
         {SOP_LANES.map((lane, i) => (
           <span
             key={lane}
+            style={delay(250 + i * 90)}
             className={cx(
-              "px-3 py-1 rounded-full text-xs border",
+              "pop px-3 py-1 rounded-full text-xs border",
               SOP_LANE_STYLES[i].badge,
             )}
           >
@@ -95,7 +105,10 @@ export function SopSlide() {
 
       {/* Mobile / tablet: one vertical flow */}
       <div className="lg:hidden relative">
-        <div className="absolute left-[26px] top-6 bottom-6 w-px bg-amber-500/25" />
+        <div
+          style={delay(300)}
+          className="draw-y absolute left-[26px] top-6 bottom-6 w-px bg-amber-500/25"
+        />
         <ol className="space-y-3">
           {SOP_STEPS.map((step, i) => (
             <li key={step.title} className="relative pl-[60px]">
@@ -123,8 +136,9 @@ export function SopSlide() {
         {SOP_LANES.map((lane, laneIndex) => (
           <div
             key={lane}
+            style={delay(250 + laneIndex * 150)}
             className={cx(
-              "flex",
+              "rise flex",
               laneIndex > 0 && "border-t border-amber-500/15",
             )}
           >
@@ -156,10 +170,10 @@ export function SopSlide() {
       </div>
 
       {/* Progress */}
-      <div className="mt-5 flex items-center gap-3">
+      <div style={delay(1100)} className="rise mt-5 flex items-center gap-3">
         <div className="h-2 flex-1 rounded bg-white/10">
           <div
-            className="h-full bg-amber-500 rounded transition-all"
+            className="h-full bg-amber-500 rounded transition-all duration-500 ease-out"
             style={{ width: `${(done.size / total) * 100}%` }}
           />
         </div>

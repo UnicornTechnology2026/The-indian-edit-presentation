@@ -1,4 +1,5 @@
 import type { Callout } from "./phoneScreens";
+import { delay } from "@/utils/anim";
 
 /**
  * Labels that explain parts of the phone screen.
@@ -14,16 +15,25 @@ export function Callouts({ items }: { items: Callout[] }) {
   return (
     <>
       {/* Desktop: positioned beside the phone */}
-      <div className="hidden lg:block relative h-[470px] w-full max-w-xs fade">
-        {items.map((c) => (
+      <div className="hidden lg:block relative h-[470px] w-full max-w-xs">
+        {items.map((c, i) => (
           <div
             key={c.title}
             style={{ top: c.y }}
             className="absolute left-0 w-full -translate-y-1/2"
           >
             {/* Dashed connector; the grid gap (w-8) reaches the phone edge */}
-            <span className="absolute right-full top-1/2 w-8 border-t border-dashed border-amber-400/50" />
-            <div className="rounded-lg border border-amber-500/30 bg-white/[0.04] px-3 py-2">
+            <span
+              style={{
+                ...delay(400 + i * 150),
+                transformOrigin: "right center",
+              }}
+              className="draw-x absolute right-full top-1/2 w-8 border-t border-dashed border-amber-400/50"
+            />
+            <div
+              style={delay(500 + i * 150)}
+              className="slide-in rounded-lg border border-amber-500/30 bg-white/[0.04] px-3 py-2"
+            >
               <div className="text-[13px] font-medium leading-snug text-amber-200">
                 {c.title}
               </div>
@@ -36,11 +46,12 @@ export function Callouts({ items }: { items: Callout[] }) {
       </div>
 
       {/* Mobile / tablet: stacked list */}
-      <div className="lg:hidden grid gap-2 w-full max-w-md fade">
-        {items.map((c) => (
+      <div className="lg:hidden grid gap-2 w-full max-w-md">
+        {items.map((c, i) => (
           <div
             key={c.title}
-            className="rounded-lg border border-amber-500/30 bg-white/[0.04] px-3 py-2"
+            style={delay(150 + i * 100)}
+            className="rise rounded-lg border border-amber-500/30 bg-white/[0.04] px-3 py-2"
           >
             <div className="text-sm font-medium text-amber-200">{c.title}</div>
             <div className="text-xs text-stone-300">{c.text}</div>

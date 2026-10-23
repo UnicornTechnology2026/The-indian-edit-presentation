@@ -63,7 +63,7 @@ export const PHONE_SCREENS: PhoneScreen[] = [
     title: "QR scanning",
     callouts: [
       {
-        title: "Outlet QR code",
+        title: "Promotional QR code",
         text: "Scanned from outlet materials",
         y: 195,
       },

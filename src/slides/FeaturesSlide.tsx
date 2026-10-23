@@ -2,6 +2,7 @@ import { useState } from "react";
 import { SlideHeading } from "@/components/ui";
 import { FEATURE_AREAS, type FeatureArea } from "@/data/features";
 import { cx } from "@/utils/cx";
+import { delay } from "@/utils/anim";
 
 /* ------------------------------------------------------------------ */
 /* Left list: one button per capability area                           */
@@ -18,9 +19,10 @@ function AreaButton({ area, index, selected, onSelect }: AreaButtonProps) {
   return (
     <button
       onClick={onSelect}
+      style={delay(150 + index * 90)}
       aria-pressed={selected}
       className={cx(
-        "w-full flex items-center gap-4 rounded-xl border px-4 py-3 text-left transition",
+        "slide-in lift w-full flex items-center gap-4 rounded-xl border px-4 py-3 text-left transition",
         selected
           ? "bg-amber-500/15 border-amber-400 shadow-[0_0_24px_rgba(245,166,35,.15)]"
           : "bg-white/[0.04] border-amber-500/20 hover:border-amber-500/60",
@@ -94,12 +96,16 @@ function DetailPanel({ area, index, className }: DetailPanelProps) {
 
       {/* Capabilities */}
       <ul className="mt-5 space-y-2">
-        {area.items.map((item) => (
+        {area.items.map((item, i) => (
           <li
             key={item.label}
-            className="flex items-center gap-3 rounded-lg border border-amber-500/20 bg-white/[0.04] px-4 py-3"
+            style={delay(150 + i * 80)}
+            className="rise flex items-center gap-3 rounded-lg border border-amber-500/20 bg-white/[0.04] px-4 py-3"
           >
-            <span className="w-2.5 h-2.5 rotate-45 bg-amber-500 shrink-0" />
+            <span
+              className="pop w-2.5 h-2.5 rotate-45 bg-amber-500 shrink-0"
+              style={delay(250 + i * 80)}
+            />
             <span className="flex-1 text-stone-200">{item.label}</span>
           </li>
         ))}

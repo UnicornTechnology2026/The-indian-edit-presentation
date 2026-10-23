@@ -15,7 +15,7 @@ export default function App() {
         boxSizing: "border-box",
       }}
     >
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1 overflow-y-auto overflow-x-hidden">
         {/* `key` re-mounts the slide so the fade-in plays and local state resets. */}
         <div
           key={index}

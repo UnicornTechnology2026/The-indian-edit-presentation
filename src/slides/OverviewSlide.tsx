@@ -2,6 +2,7 @@ import { useState } from "react";
 import bottle from "@/assets/newBottle.png";
 import { ACTORS, OBJECTIVES } from "@/data/overview";
 import { cx } from "@/utils/cx";
+import { delay } from "@/utils/anim";
 
 /** Tailwind position classes for the four actors around the circle (top, right, bottom, left). */
 const ACTOR_POSITIONS = [
@@ -20,17 +21,20 @@ export function OverviewSlide() {
       {/* Left: headline + objectives */}
       <div className="lg:col-span-2">
         <div className="flex items-center gap-3 text-[11px] tracking-[.35em] text-amber-500 uppercase">
-          <span className="w-10 h-px bg-amber-500" />
+          <span className="draw-x w-10 h-px bg-amber-500" />
           Strategic Overview
         </div>
-        <h2 className="font-serif text-5xl md:text-6xl text-amber-50 leading-[1.05] mt-4">
+        <h2
+          style={delay(100)}
+          className="rise font-serif text-5xl md:text-6xl text-amber-50 leading-[1.05] mt-4"
+        >
           Every outlet visit,
           <br />
           one connected
           <br />
           <i className="text-amber-400">brand moment.</i>
         </h2>
-        <p className="text-stone-400 mt-4 max-w-md">
+        <p style={delay(250)} className="rise text-stone-400 mt-4 max-w-md">
           One programme that links what consumers do on their phone with what
           happens at the outlet counter.
         </p>
@@ -38,7 +42,8 @@ export function OverviewSlide() {
           {OBJECTIVES.map((o, i) => (
             <li
               key={o.text}
-              className="flex gap-4 items-baseline py-3 border-t border-amber-500/20"
+              style={delay(400 + i * 150)}
+              className="slide-in flex gap-4 items-baseline py-3 border-t border-amber-500/20"
             >
               <span className="font-serif text-3xl text-amber-500 w-10">
                 0{i + 1}
@@ -51,8 +56,11 @@ export function OverviewSlide() {
 
       {/* Right: actor wheel */}
       <div className="lg:col-span-3">
-        <div className="relative w-[300px] h-[300px] sm:w-[380px] sm:h-[380px] mx-auto">
-          <svg viewBox="0 0 100 100" className="absolute inset-0">
+        <div
+          style={delay(200)}
+          className="rise relative w-[300px] h-[300px] sm:w-[380px] sm:h-[380px] mx-auto"
+        >
+          <svg viewBox="0 0 100 100" className="spin-slow absolute inset-0">
             <circle
               cx="50"
               cy="50"
@@ -74,7 +82,7 @@ export function OverviewSlide() {
           </svg>
           <img
             src={bottle}
-            className="absolute inset-0 m-auto h-28 sm:h-36 object-contain"
+            className="float absolute inset-0 m-auto h-28 sm:h-36 object-contain"
             alt=""
           />
 
@@ -82,8 +90,9 @@ export function OverviewSlide() {
             <button
               key={a.name}
               onClick={() => setSelected(i)}
+              style={delay(500 + i * 130)}
               className={cx(
-                "absolute flex flex-col items-center w-24",
+                "pop absolute flex flex-col items-center w-24",
                 ACTOR_POSITIONS[i],
               )}
             >

@@ -61,7 +61,7 @@ export const STEPS: FlowStep[] = [
     icon: "🔐",
     who: ["App"],
     detail:
-      "Retry OTP or ask staff for help; exit with guidance once the allowed attempts are used.",
+      "Retry OTP or ask promoter for help; exit with guidance once the allowed attempts are used.",
     noLabel: "Retry OTP / get help",
   },
   {

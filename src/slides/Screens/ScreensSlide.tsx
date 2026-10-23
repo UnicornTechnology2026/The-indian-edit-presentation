@@ -4,6 +4,7 @@ import { SlideHeading } from "@/components/ui";
 import { cx } from "@/utils/cx";
 import { PHONE_SCREENS } from "./phoneScreens";
 import { Callouts } from "./Callouts";
+import { delay } from "@/utils/anim";
 
 export function ScreensSlide() {
   const [selected, setSelected] = useState(0);
@@ -21,7 +22,10 @@ export function ScreensSlide() {
           keeps the phone truly centred. Mobile: phone first, buttons below. */}
       <div className="grid gap-8 items-center lg:grid-cols-[1fr_auto_1fr]">
         {/* Phone / image (middle) */}
-        <div className="order-1 lg:order-2 flex justify-center">
+        <div
+          style={delay(250)}
+          className="rise order-1 lg:order-2 flex justify-center"
+        >
           {screen.image ? (
             <img
               key={selected}
@@ -46,8 +50,9 @@ export function ScreensSlide() {
             <button
               key={s.title}
               onClick={() => setSelected(i)}
+              style={delay(150 + i * 70)}
               className={cx(
-                "text-left rounded-lg p-3 border text-sm",
+                "slide-in lift text-left rounded-lg p-3 border text-sm",
                 selected === i
                   ? "bg-amber-500 text-black border-amber-400"
                   : "border-amber-500/20 bg-white/[0.04] text-stone-200 hover:border-amber-500/60",

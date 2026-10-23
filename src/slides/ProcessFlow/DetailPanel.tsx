@@ -1,6 +1,12 @@
-import { phaseOf, STEPS, type DecisionStep, type FlowStep } from '@/data/processFlow';
-import { cx } from '@/utils/cx';
-import type { Branch } from './constants';
+import {
+  phaseOf,
+  STEPS,
+  type DecisionStep,
+  type FlowStep,
+} from "@/data/processFlow";
+import { cx } from "@/utils/cx";
+import type { Branch } from "./constants";
+import { delay } from "@/utils/anim";
 
 /* ---------------- Decision: Yes / No cards ---------------- */
 
@@ -12,15 +18,23 @@ interface DecisionDetailProps {
 }
 
 function branchCardTone(selected: boolean, key: Branch): string {
-  if (!selected) return 'border-white/10 bg-white/[0.03] hover:border-amber-500/40';
-  return key === 'yes' ? 'bg-amber-500/20 border-amber-400' : 'bg-red-900/40 border-red-400';
+  if (!selected)
+    return "border-white/10 bg-white/[0.03] hover:border-amber-500/40";
+  return key === "yes"
+    ? "bg-amber-500/20 border-amber-400"
+    : "bg-red-900/40 border-red-400";
 }
 
-function DecisionDetail({ current, next, branch, onBranch }: DecisionDetailProps) {
-  const isYes = branch === 'yes';
+function DecisionDetail({
+  current,
+  next,
+  branch,
+  onBranch,
+}: DecisionDetailProps) {
+  const isYes = branch === "yes";
   const options: { key: Branch; label: string; text: string }[] = [
-    { key: 'yes', label: '✓ YES', text: `Continues to “${next.title}”.` },
-    { key: 'no', label: '✕ NO', text: current.detail },
+    { key: "yes", label: "✓ YES", text: `Continues to “${next.title}”.` },
+    { key: "no", label: "✕ NO", text: current.detail },
   ];
 
   return (
@@ -30,12 +44,15 @@ function DecisionDetail({ current, next, branch, onBranch }: DecisionDetailProps
           <button
             key={o.key}
             onClick={() => onBranch(o.key)}
-            className={cx('text-left rounded-xl p-4 border transition', branchCardTone(branch === o.key, o.key))}
+            className={cx(
+              "text-left rounded-xl p-4 border transition",
+              branchCardTone(branch === o.key, o.key),
+            )}
           >
             <div
               className={cx(
-                'text-xs font-semibold tracking-widest mb-1',
-                o.key === 'yes' ? 'text-amber-400' : 'text-red-400',
+                "text-xs font-semibold tracking-widest mb-1",
+                o.key === "yes" ? "text-amber-400" : "text-red-400",
               )}
             >
               {o.label}
@@ -49,11 +66,15 @@ function DecisionDetail({ current, next, branch, onBranch }: DecisionDetailProps
         <span className="px-3 py-1.5 rounded-lg border border-amber-500/40 bg-amber-500/10 text-amber-100">
           {current.title}
         </span>
-        <span className={isYes ? 'text-amber-400' : 'text-red-400'}>── {isYes ? 'Yes' : 'No'} ──▶</span>
+        <span className={isYes ? "text-amber-400" : "text-red-400"}>
+          ── {isYes ? "Yes" : "No"} ──▶
+        </span>
         <span
           className={cx(
-            'px-3 py-1.5 rounded-lg border',
-            isYes ? 'border-amber-500/40 text-amber-100' : 'border-red-500/50 bg-red-950/50 text-red-200',
+            "px-3 py-1.5 rounded-lg border",
+            isYes
+              ? "border-amber-500/40 text-amber-100"
+              : "border-red-500/50 bg-red-950/50 text-red-200",
           )}
         >
           {isYes ? next.title : current.noLabel}
@@ -79,14 +100,16 @@ function ProcessDetail({ current, next, onNext }: ProcessDetailProps) {
       {next ? (
         <button
           onClick={onNext}
-          className="mt-5 w-full text-left rounded-xl p-4 border border-amber-500/30 bg-white/[0.04] hover:border-amber-400 hover:bg-amber-500/10 transition flex items-center gap-3"
+          className="lift mt-5 w-full text-left rounded-xl p-4 border border-amber-500/30 bg-white/[0.04] hover:border-amber-400 hover:bg-amber-500/10 transition flex items-center gap-3"
         >
           <span className="text-2xl">{next.icon}</span>
           <span className="flex-1">
-            <span className="block text-[10px] tracking-[.25em] uppercase text-stone-500">Next up</span>
+            <span className="block text-[10px] tracking-[.25em] uppercase text-stone-500">
+              Next up
+            </span>
             <span className="text-amber-100">{next.title}</span>
           </span>
-          <span className="text-amber-400 text-xl">→</span>
+          <span className="text-amber-400 text-xl animate-pulse">→</span>
         </button>
       ) : (
         <div className="mt-5 rounded-xl p-4 border border-amber-500/30 bg-amber-500/10 text-amber-100">
@@ -106,7 +129,12 @@ interface DetailPanelProps {
   onSelect: (index: number) => void;
 }
 
-export function DetailPanel({ step, branch, onBranch, onSelect }: DetailPanelProps) {
+export function DetailPanel({
+  step,
+  branch,
+  onBranch,
+  onSelect,
+}: DetailPanelProps) {
   const current = STEPS[step];
   const next: FlowStep | undefined = STEPS[step + 1];
 
@@ -116,20 +144,26 @@ export function DetailPanel({ step, branch, onBranch, onSelect }: DetailPanelPro
       className="fade mt-5 rounded-2xl border border-amber-500/25 bg-gradient-to-br from-white/[0.06] to-transparent p-5 md:p-7 grid md:grid-cols-5 gap-6"
     >
       {/* left: identity of the step */}
-      <div className="md:col-span-2">
+      <div style={delay(50)} className="rise md:col-span-2">
         <div className="flex items-center gap-3">
           <span className="font-serif text-6xl leading-none text-amber-500/80">
-            {String(step + 1).padStart(2, '0')}
+            {String(step + 1).padStart(2, "0")}
           </span>
           <span className="text-4xl">{current.icon}</span>
         </div>
         <div className="text-[11px] tracking-[.25em] uppercase text-stone-500 mt-3">
-          {current.type === 'decision' ? 'Decision point' : 'Process step'} · {phaseOf(step)}
+          {current.type === "decision" ? "Decision point" : "Process step"} ·{" "}
+          {phaseOf(step)}
         </div>
-        <h3 className="font-serif text-3xl text-amber-50 mt-1 leading-tight">{current.title}</h3>
+        <h3 className="font-serif text-3xl text-amber-50 mt-1 leading-tight">
+          {current.title}
+        </h3>
         <div className="flex gap-1.5 flex-wrap mt-3">
           {current.who.map((w) => (
-            <span key={w} className="text-xs px-2.5 py-1 rounded-full border border-amber-500/40 text-amber-300">
+            <span
+              key={w}
+              className="text-xs px-2.5 py-1 rounded-full border border-amber-500/40 text-amber-300"
+            >
               {w}
             </span>
           ))}
@@ -137,11 +171,20 @@ export function DetailPanel({ step, branch, onBranch, onSelect }: DetailPanelPro
       </div>
 
       {/* right: what happens */}
-      <div className="md:col-span-3">
-        {current.type === 'decision' && next ? (
-          <DecisionDetail current={current} next={next} branch={branch} onBranch={onBranch} />
+      <div style={delay(150)} className="rise md:col-span-3">
+        {current.type === "decision" && next ? (
+          <DecisionDetail
+            current={current}
+            next={next}
+            branch={branch}
+            onBranch={onBranch}
+          />
         ) : (
-          <ProcessDetail current={current} next={next} onNext={() => onSelect(step + 1)} />
+          <ProcessDetail
+            current={current}
+            next={next}
+            onNext={() => onSelect(step + 1)}
+          />
         )}
       </div>
     </div>
