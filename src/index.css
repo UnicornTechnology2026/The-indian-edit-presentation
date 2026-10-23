@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  background: #080405;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+/* Slide entrance animation */
+.fade {
+  animation: fade-in 0.5s ease both;
+}
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Deck background (deep maroon vignette) */
+.bgx {
+  background: radial-gradient(ellipse at 80% 0, #4a0f1c 0, #14080b 45%, #080405 100%);
+}
+
+/* Subtle gold dot pattern */
+.pat {
+  background-image: radial-gradient(circle at 1px 1px, rgba(212, 166, 74, 0.12) 1px, transparent 0);
+  background-size: 22px 22px;
+}
