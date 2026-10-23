@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { Card, SlideHeading } from '@/components/ui';
-import { ACTORS, OBJECTIVES } from '@/data/overview';
-import { cx } from '@/utils/cx';
+import { useState } from "react";
+import { Card, SlideHeading } from "@/components/ui";
+import { ACTORS, OBJECTIVES } from "@/data/overview";
+import { cx } from "@/utils/cx";
 
 /** Earlier card-based version of the overview. The wheel version (OverviewSlide) replaced it. */
 export function OverviewClassicSlide() {
@@ -11,7 +11,7 @@ export function OverviewClassicSlide() {
   return (
     <div className="p-6 md:p-10">
       <SlideHeading
-        kicker="02 · Strategic Overview"
+        kicker=" Strategic Overview"
         title="Turning every outlet visit into a connected brand moment"
         subtitle="One programme that links what consumers do on their phone with what happens at the outlet counter."
       />
@@ -32,10 +32,10 @@ export function OverviewClassicSlide() {
                 key={a.name}
                 onClick={() => setSelected(i)}
                 className={cx(
-                  'rounded-xl p-4 text-center border transition',
+                  "rounded-xl p-4 text-center border transition",
                   selected === i
-                    ? 'bg-amber-500/20 border-amber-400'
-                    : 'border-amber-500/20 bg-white/[0.04] hover:border-amber-500/60',
+                    ? "bg-amber-500/20 border-amber-400"
+                    : "border-amber-500/20 bg-white/[0.04] hover:border-amber-500/60",
                 )}
               >
                 <div className="text-3xl">{a.icon}</div>

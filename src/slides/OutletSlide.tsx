@@ -5,9 +5,11 @@ export function OutletSlide() {
   return (
     <div className="p-5 md:p-10 max-w-6xl mx-auto">
       <div className="mb-8">
-        <div className="text-[11px] tracking-[.3em] text-amber-500 uppercase">
-          06 · Execution at the Outlet
+        <div className="flex items-center gap-3 text-[11px] tracking-[.35em] text-amber-500 uppercase">
+          <span className="w-10 h-px bg-amber-500" />
+          Execution at the Outlet
         </div>
+
         <h2 className="font-serif text-3xl md:text-5xl text-amber-50 mt-1">
           Five simple steps.
         </h2>

@@ -12,7 +12,7 @@ export function ScreensSlide() {
   return (
     <div className="p-6 md:p-10">
       <SlideHeading
-        kicker="05 · Illustrative Mobile Screens"
+        kicker=" Illustrative Mobile Screens"
         title="Proposed UI concepts"
         subtitle="Concept layouts only — not screenshots of an existing product."
       />
