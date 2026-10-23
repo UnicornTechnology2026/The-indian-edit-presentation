@@ -1,30 +1,90 @@
-import { Card, SlideHeading } from '@/components/ui';
-import { OUTLET_STEPS } from '@/data/outlet';
+import { OUTLET_OWNERS, OUTLET_PRINCIPLES, OUTLET_STEPS } from "@/data/outlet";
+import { cx } from "@/utils/cx";
 
 export function OutletSlide() {
-  const lastIndex = OUTLET_STEPS.length - 1;
-
   return (
-    <div className="p-6 md:p-10">
-      <SlideHeading
-        kicker="06 · Execution Mechanism at Outlet Level"
-        title="A simple, repeatable five-step routine"
-        subtitle="Designed so every outlet team executes the experience the same way."
-      />
-      <div className="grid md:grid-cols-5 gap-3">
-        {OUTLET_STEPS.map((step, i) => (
-          <div key={step.title} className="relative">
-            <Card className="p-4 h-full hover:border-amber-400 transition">
-              <div className="text-amber-400 text-sm">0{i + 1}</div>
-              <div className="text-3xl my-2">{step.icon}</div>
-              <div className="text-amber-100 font-medium">{step.title}</div>
-              <div className="text-stone-400 text-sm mt-1">{step.description}</div>
-            </Card>
-            {i < lastIndex && (
-              <span className="hidden md:block absolute -right-3 top-1/2 text-amber-500 z-10">→</span>
-            )}
+    <div className="p-5 md:p-10 max-w-6xl mx-auto">
+      <div className="mb-8">
+        <div className="text-[11px] tracking-[.3em] text-amber-500 uppercase">
+          06 · Execution at the Outlet
+        </div>
+        <h2 className="font-serif text-3xl md:text-5xl text-amber-50 mt-1">
+          Five simple steps.
+        </h2>
+        <p className="text-stone-400 mt-2 text-base max-w-2xl">
+          The same routine at every outlet, so every guest gets the same
+          experience. The brand team sets it up and reviews it. Outlet staff run
+          it on the day.
+        </p>
+      </div>
+
+      {/* Mobile: vertical list. Desktop: one row with a connecting line. */}
+      <div className="relative">
+        <div className="hidden md:block absolute left-[10%] right-[10%] top-[34px] h-px bg-amber-500/30" />
+        <div className="md:hidden absolute left-[33px] top-8 bottom-8 w-px bg-amber-500/30" />
+
+        <ol className="grid md:grid-cols-5 gap-6 md:gap-3">
+          {OUTLET_STEPS.map((step, i) => {
+            const owner = OUTLET_OWNERS[step.owner];
+            return (
+              <li
+                key={step.title}
+                className="relative flex md:flex-col items-start md:items-center md:text-center gap-4 md:gap-0"
+              >
+                <span className="relative z-10 shrink-0 w-[68px] h-[68px] rounded-full bg-[#14080b] border border-amber-400/70 flex items-center justify-center text-3xl">
+                  {step.icon}
+                </span>
+                <div className="md:mt-4">
+                  <div className="text-[11px] tracking-[.25em] text-amber-500">
+                    0{i + 1}
+                  </div>
+                  <div className="font-serif text-2xl text-amber-50 leading-tight">
+                    {step.title}
+                  </div>
+                  <p className="text-stone-200 text-sm mt-1">{step.text}</p>
+                  <ul className="mt-2 space-y-1">
+                    {step.details.map((d) => (
+                      <li
+                        key={d}
+                        className="text-stone-400 text-xs leading-snug"
+                      >
+                        {d}
+                      </li>
+                    ))}
+                  </ul>
+                  <span
+                    className={cx(
+                      "inline-block mt-3 px-2.5 py-0.5 rounded-full text-[11px] border",
+                      owner.className,
+                    )}
+                  >
+                    {owner.label}
+                  </span>
+                </div>
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+
+      <div className="mt-10 grid md:grid-cols-3 gap-3">
+        {OUTLET_PRINCIPLES.map((p) => (
+          <div
+            key={p.title}
+            className="rounded-xl border border-amber-500/20 bg-white/[0.04] px-4 py-3"
+          >
+            <div className="font-serif text-lg text-amber-50">{p.title}</div>
+            <div className="text-stone-400 text-sm mt-0.5">{p.text}</div>
           </div>
         ))}
+      </div>
+
+      <div className="mt-4 rounded-xl border border-dashed border-amber-500/30 px-5 py-3 flex items-center gap-3 text-stone-200 text-sm">
+        <span className="text-amber-400 text-xl">↻</span>
+        <span>
+          Results from <b className="text-amber-100">Report</b> improve the next{" "}
+          <b className="text-amber-100">Brief</b>.
+        </span>
       </div>
     </div>
   );
